@@ -1,4 +1,4 @@
----------------------------- Somnath Web -------------------------------
+------------------------ Somnath Invoice Laravel -----------------------
 
 Project Name : somnath-invoice-laravel
 
