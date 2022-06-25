@@ -190,11 +190,12 @@
                                     </div>
                                     <div class="col-md-6 d-flex justify-content-end order-md-2 order-1">
                                         <div class="invoice-total-wrapper">
-                                        <div class="invoice-total-item">
+                                            <div class="invoice-total-item">
                                                 <p class="invoice-total-title">Subtotal:</p>
                                                 <p class="invoice-total-amount" id="view-subtotal">₹ {{ isset($data->subtotal) ? number_format($data->subtotal, 2) : 0 }}</p>
                                                 {!! Form::hidden('subtotal', isset($data->subtotal) ? round($data->subtotal, 2) : 0, array('id' => 'subtotal')) !!}
                                             </div>
+                                            @if(isset($data->room_charge) && $data->room_charge >= 1000)
                                             <div class="invoice-total-item" id="view-cgst-div">
                                                 <p class="invoice-total-title">CGST (6%):</p>
                                                 <p class="invoice-total-amount" id="view-cgst">₹ {{ isset($data->cgst) ? number_format($data->cgst, 2) : 0 }}</p>
@@ -207,6 +208,7 @@
                                                 <p class="invoice-total-title">IGST (12%):</p>
                                                 <p class="invoice-total-amount" id="view-igst">₹ {{ isset($data->igst) ? number_format($data->igst, 2) : 0 }}</p>
                                             </div>
+                                            @endif
                                             <hr class="my-50" />
                                             <div class="invoice-total-item">
                                                 <p class="invoice-total-title">Net Amount:</p>
@@ -306,10 +308,13 @@ $(document).ready(function () {
     }); 
 
     $(document).on('keypress', '.room_charge', function(e){
-        var charCode = (e.which) ? e.which : event.keyCode     
-        if (String.fromCharCode(charCode).match(/[^0-9\.]/g)){
+        var charCode = (e.which) ? e.which : event.keyCode  
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)){
             return false;
-        }  
+        }    
+        // if (String.fromCharCode(charCode).match(/[^0-9\.]/g)){
+        //     return false;
+        // }  
     });
     
     $(document).on('keypress', '.total_days', function(e){    
@@ -336,7 +341,7 @@ $(document).ready(function () {
             if(roomCharge >= 1000){
                 cgst = parseFloat((subTotal*6)/100).toFixed(2);
                 sgst = parseFloat((subTotal*6)/100).toFixed(2);
-                igst = parseFloat((subTotal*10)/100).toFixed(2);
+                igst = parseFloat((subTotal*12)/100).toFixed(2);
 
                 $('#view-cgst').text('₹ ' + cgst);
                 $('#view-sgst').text('₹ ' + sgst);
@@ -359,6 +364,12 @@ $(document).ready(function () {
                         $("#view-cgst-div").hide();
                         $("#view-sgst-div").hide();
                     }
+                }else{
+                    netAmount = parseFloat(subTotal) + parseFloat(cgst) + parseFloat(sgst);
+                    $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
+                    $("#view-igst-div").hide();
+                    $("#view-cgst-div").show();
+                    $("#view-sgst-div").show();
                 }
             }else{
                 netAmount = parseFloat(subTotal);
@@ -411,7 +422,7 @@ $(document).ready(function () {
             if(roomCharge >= 1000){
                 cgst = parseFloat((subTotal*6)/100).toFixed(2);
                 sgst = parseFloat((subTotal*6)/100).toFixed(2);
-                igst = parseFloat((subTotal*10)/100).toFixed(2);
+                igst = parseFloat((subTotal*12)/100).toFixed(2);
 
                 $('#view-cgst').text('₹ ' + cgst);
                 $('#view-sgst').text('₹ ' + sgst);
@@ -434,6 +445,12 @@ $(document).ready(function () {
                         $("#view-cgst-div").hide();
                         $("#view-sgst-div").hide();
                     }
+                }else{
+                    netAmount = parseFloat(subTotal) + parseFloat(cgst) + parseFloat(sgst);
+                    $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
+                    $("#view-igst-div").hide();
+                    $("#view-cgst-div").show();
+                    $("#view-sgst-div").show();
                 }
             }else{
                 netAmount = parseFloat(subTotal);

@@ -190,6 +190,7 @@
                                     <td>Subtotal</td>
                                     <td>₹ {{ isset($data->subtotal) ? number_format($data->subtotal, 2) : 0 }}</td>
                                 </tr>
+                                @if(isset($data->room_charge) && $data->room_charge >= 1000)
                                 @if(isset($data->gst_type) && $data->gst_type == config('const.gstTypeCgstSgst'))
                                 <tr>
                                     <td></td>
@@ -228,7 +229,8 @@
                                     <td><strong>IGST 12%</strong></td>
                                     <td>₹ {{ isset($data->igst) ? number_format($data->igst, 2) : 0 }}</td>
                                 </tr>
-                                @endif   
+                                @endif
+                                @endif
                                 <tr style="background-color: #025872 !important;">
                                     <th style="background-color: #025872 !important;color:white !important"></th>
                                     <th style="background-color: #025872 !important;color:white !important"></th>
