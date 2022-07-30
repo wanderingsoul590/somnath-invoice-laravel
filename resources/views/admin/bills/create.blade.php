@@ -328,7 +328,7 @@ $(document).ready(function () {
             $("#subtotal").val(subTotal);
             $('#view-subtotal').text('₹ ' + subTotal);
 
-            if(roomCharge >= 1000){
+            // if(roomCharge >= 1000){
                 cgst = parseFloat((subTotal*6)/100).toFixed(2);
                 sgst = parseFloat((subTotal*6)/100).toFixed(2);
                 igst = parseFloat((subTotal*12)/100).toFixed(2);
@@ -361,13 +361,13 @@ $(document).ready(function () {
                     $("#view-cgst-div").show();
                     $("#view-sgst-div").show();
                 }
-            }else{
-                netAmount = parseFloat(subTotal);
-                $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
-                $("#view-igst-div").hide();
-                $("#view-cgst-div").hide();
-                $("#view-sgst-div").hide();
-            }
+            // }else{
+            //     netAmount = parseFloat(subTotal);
+            //     $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
+            //     $("#view-igst-div").hide();
+            //     $("#view-cgst-div").hide();
+            //     $("#view-sgst-div").hide();
+            // }
                
         }else{
             $("#subtotal").val(subTotal);
@@ -410,7 +410,7 @@ $(document).ready(function () {
             $("#subtotal").val(subTotal);
             $('#view-subtotal').text('₹ ' + subTotal);
 
-            if(roomCharge >= 1000){
+            // if(roomCharge >= 1000){
                 cgst = parseFloat((subTotal*6)/100).toFixed(2);
                 sgst = parseFloat((subTotal*6)/100).toFixed(2);
                 igst = parseFloat((subTotal*12)/100).toFixed(2);
@@ -443,13 +443,13 @@ $(document).ready(function () {
                     $("#view-cgst-div").show();
                     $("#view-sgst-div").show();
                 }
-            }else{
-                netAmount = parseFloat(subTotal);
-                $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
-                $("#view-igst-div").hide();
-                $("#view-cgst-div").hide();
-                $("#view-sgst-div").hide();
-            }
+            // }else{
+            //     netAmount = parseFloat(subTotal);
+            //     $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
+            //     $("#view-igst-div").hide();
+            //     $("#view-cgst-div").hide();
+            //     $("#view-sgst-div").hide();
+            // }
               
         }else{
             if(roomCharge != '' && totalDays != ''){

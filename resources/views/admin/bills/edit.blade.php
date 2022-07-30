@@ -194,8 +194,7 @@
                                                 <p class="invoice-total-title">Subtotal:</p>
                                                 <p class="invoice-total-amount" id="view-subtotal">₹ {{ isset($data->subtotal) ? number_format($data->subtotal, 2) : 0 }}</p>
                                                 {!! Form::hidden('subtotal', isset($data->subtotal) ? round($data->subtotal, 2) : 0, array('id' => 'subtotal')) !!}
-                                            </div>
-                                            @if(isset($data->room_charge) && $data->room_charge >= 1000)
+                                            </div>                                        
                                             <div class="invoice-total-item" id="view-cgst-div">
                                                 <p class="invoice-total-title">CGST (6%):</p>
                                                 <p class="invoice-total-amount" id="view-cgst">₹ {{ isset($data->cgst) ? number_format($data->cgst, 2) : 0 }}</p>
@@ -207,8 +206,7 @@
                                             <div class="invoice-total-item" id="view-igst-div">
                                                 <p class="invoice-total-title">IGST (12%):</p>
                                                 <p class="invoice-total-amount" id="view-igst">₹ {{ isset($data->igst) ? number_format($data->igst, 2) : 0 }}</p>
-                                            </div>
-                                            @endif
+                                            </div>                                            
                                             <hr class="my-50" />
                                             <div class="invoice-total-item">
                                                 <p class="invoice-total-title">Net Amount:</p>
@@ -338,7 +336,7 @@ $(document).ready(function () {
             $("#subtotal").val(subTotal);
             $('#view-subtotal').text('₹ ' + subTotal);
 
-            if(roomCharge >= 1000){
+            // if(roomCharge >= 1000){
                 cgst = parseFloat((subTotal*6)/100).toFixed(2);
                 sgst = parseFloat((subTotal*6)/100).toFixed(2);
                 igst = parseFloat((subTotal*12)/100).toFixed(2);
@@ -371,13 +369,13 @@ $(document).ready(function () {
                     $("#view-cgst-div").show();
                     $("#view-sgst-div").show();
                 }
-            }else{
-                netAmount = parseFloat(subTotal);
-                $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
-                $("#view-igst-div").hide();
-                $("#view-cgst-div").hide();
-                $("#view-sgst-div").hide();
-            }
+            // }else{
+            //     netAmount = parseFloat(subTotal);
+            //     $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
+            //     $("#view-igst-div").hide();
+            //     $("#view-cgst-div").hide();
+            //     $("#view-sgst-div").hide();
+            // }
         }else{
             $("#subtotal").val(subTotal);
             $('#view-subtotal').text('₹ ' + parseFloat($('#subtotal').val()).toFixed(2));
@@ -419,7 +417,7 @@ $(document).ready(function () {
             $("#subtotal").val(subTotal);
             $('#view-subtotal').text('₹ ' + subTotal);
 
-            if(roomCharge >= 1000){
+            // if(roomCharge >= 1000){
                 cgst = parseFloat((subTotal*6)/100).toFixed(2);
                 sgst = parseFloat((subTotal*6)/100).toFixed(2);
                 igst = parseFloat((subTotal*12)/100).toFixed(2);
@@ -452,13 +450,13 @@ $(document).ready(function () {
                     $("#view-cgst-div").show();
                     $("#view-sgst-div").show();
                 }
-            }else{
-                netAmount = parseFloat(subTotal);
-                $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
-                $("#view-igst-div").hide();
-                $("#view-cgst-div").hide();
-                $("#view-sgst-div").hide();  
-            }
+            // }else{
+            //     netAmount = parseFloat(subTotal);
+            //     $('#view-net-amount').text('₹ ' + parseFloat(netAmount).toFixed(2));
+            //     $("#view-igst-div").hide();
+            //     $("#view-cgst-div").hide();
+            //     $("#view-sgst-div").hide();  
+            // }
    
         }else{
             if(roomCharge != '' && totalDays != ''){

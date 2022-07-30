@@ -77,7 +77,7 @@ class BillsController extends Controller
                 $sgst = ($subtotal*config('const.sgstPercentage'))/100;
                 $igst = ($subtotal*config('const.igstPercentage'))/100;
                 
-                if($data->room_charge >= 1000){
+                // if($data->room_charge >= 1000){
                     if(isset($data->customer->gst) && $data->customer->gst != ''){
                         $chars = substr(trim($data->customer->gst), 0, 2);
                         if($chars == '24'){
@@ -91,9 +91,9 @@ class BillsController extends Controller
                         $data->gst_type = config('const.gstTypeCgstSgst');
                         $netamount = $subtotal + $cgst + $sgst;
                     }
-                }else{
-                    $netamount = $subtotal;
-                }
+                // }else{
+                //     $netamount = $subtotal;
+                // }
     
                 $data->subtotal = $subtotal;
                 $data->cgst = $cgst;
@@ -135,7 +135,7 @@ class BillsController extends Controller
             $sgst = ($subtotal*config('const.sgstPercentage'))/100;
             $igst = ($subtotal*config('const.igstPercentage'))/100; 
             
-            if($data->room_charge >= 1000){
+            // if($data->room_charge >= 1000){
                 if(isset($data->customer->gst) && $data->customer->gst != ''){
                     $chars = substr(trim($data->customer->gst), 0, 2);
                     if($chars == '24'){
@@ -149,9 +149,9 @@ class BillsController extends Controller
                     $data->gst_type = config('const.gstTypeCgstSgst');
                     $netamount = $subtotal + $cgst + $sgst;
                 }
-            }else{
-                $netamount = $subtotal;
-            }
+            // }else{
+            //     $netamount = $subtotal;
+            // }
 
             $data->subtotal = round($subtotal,2);
             $data->cgst = round($cgst,2);
@@ -226,7 +226,7 @@ class BillsController extends Controller
             $sgst = ($subtotal*config('const.sgstPercentage'))/100;
             $igst = ($subtotal*config('const.igstPercentage'))/100;        
 
-            if($data->room_charge >= 1000){
+            // if($data->room_charge >= 1000){
                 if(isset($data->customer->gst) && $data->customer->gst != ''){
                     $chars = substr(trim($data->customer->gst), 0, 2);
                     if($chars == '24'){
@@ -240,9 +240,9 @@ class BillsController extends Controller
                     $data->gst_type = config('const.gstTypeCgstSgst');
                     $netamount = $subtotal + $cgst + $sgst;
                 }
-            }else{
-                $netamount = $subtotal;
-            }
+            // }else{
+            //     $netamount = $subtotal;
+            // }
 
             $data->subtotal = $subtotal;
             $data->cgst = $cgst;

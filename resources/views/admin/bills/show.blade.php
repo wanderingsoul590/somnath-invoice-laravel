@@ -182,7 +182,6 @@
                                                 <p class="invoice-total-title">Subtotal:</p>
                                                 <p class="invoice-total-amount">₹ {{ isset($data->subtotal) ? number_format($data->subtotal, 2) : 0 }}</p>
                                             </div>
-                                            @if(isset($data->room_charge) && $data->room_charge >= 1000)
                                             @if(isset($data->gst_type) && $data->gst_type == config('const.gstTypeCgstSgst'))
                                             <div class="invoice-total-item">
                                                 <p class="invoice-total-title">CGST (6%):</p>
@@ -197,7 +196,6 @@
                                                 <p class="invoice-total-title">IGST (12%):</p>
                                                 <p class="invoice-total-amount">₹ {{ isset($data->igst) ? number_format($data->igst, 2) : 0 }}</p>
                                             </div>
-                                            @endif
                                             @endif
                                             <hr class="my-50" />
                                             <div class="invoice-total-item">
