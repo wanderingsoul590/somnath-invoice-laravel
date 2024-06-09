@@ -22,38 +22,84 @@ class Bills extends Model
     }
 
     /* Create & Update Bill */
-    public static function createEditBill($request,$id=''){
-        if($id !=''){
-            $data = Bills::find($id);
-        }else{
-            $data = new Bills();
+    // public static function createEditBill($request,$id=''){
+    //     if($id !=''){
+    //         $data = Bills::find($id);
+    //     }else{
+    //         $data = new Bills();
+    //     }
+
+    //     $data->customer_id = isset($request->customer_id) ? $request->customer_id : null;
+    //     $data->room_number = isset($request->room_number) ? $request->room_number : null;
+    //     $data->date = isset($request->date) ? $request->date : null;        
+    //     $data->room_charge = isset($request->room_charge) ? $request->room_charge : null;
+    //     $data->person = isset($request->person) ? $request->person : null;
+    //     $data->total_days = isset($request->total_days) ? $request->total_days : null;
+
+    //     if(isset($request->checkin_time) && $request->checkin_time != ''){
+    //         $data->checkin_time = date(config('const.databaseStoredTimeFormat'), strtotime($request->checkin_time));
+    //     }
+
+    //     if(isset($request->checkout_time) && $request->checkout_time != ''){
+    //         $data->checkout_time = date(config('const.databaseStoredTimeFormat'), strtotime($request->checkout_time));
+    //     }
+
+    //     if(isset($request->from_to_date) && $request->from_to_date != ''){
+    //         $dates = explode(" to ", $request->from_to_date);
+    //         $data->checkin_date = isset($dates[0]) ? date(config('const.databaseStoredDateFormat'), strtotime(strtr($dates[0], '/', '-'))) : null;
+    //         $data->checkout_date = isset($dates[1]) ? date(config('const.databaseStoredDateFormat'), strtotime(strtr($dates[1], '/', '-'))) : null;
+    //     }
+
+    //     $data->save();
+
+    //     return $data;
+    // }
+
+    public static function createEditBill($request, $id='')
+{
+    if($id != '') {
+        $data = Bills::find($id);
+    } else {
+        $data = new Bills();
+        $currentYear = date('Y');
+        $financialYearStart = $currentYear . '-04-01';
+        $financialYearEnd = ($currentYear + 1) . '-03-31';
+        $latestBill = Bills::whereBetween('date', [$financialYearStart, $financialYearEnd])
+                            ->orderBy('id', 'desc')
+                            ->first();
+        if ($latestBill) {
+            $data->bill_no = $latestBill->bill_no + 1;
+        } else {
+            $data->bill_no = 1;
         }
-
-        $data->customer_id = isset($request->customer_id) ? $request->customer_id : null;
-        $data->room_number = isset($request->room_number) ? $request->room_number : null;
-        $data->date = isset($request->date) ? $request->date : null;        
-        $data->room_charge = isset($request->room_charge) ? $request->room_charge : null;
-        $data->person = isset($request->person) ? $request->person : null;
-        $data->total_days = isset($request->total_days) ? $request->total_days : null;
-
-        if(isset($request->checkin_time) && $request->checkin_time != ''){
-            $data->checkin_time = date(config('const.databaseStoredTimeFormat'), strtotime($request->checkin_time));
-        }
-
-        if(isset($request->checkout_time) && $request->checkout_time != ''){
-            $data->checkout_time = date(config('const.databaseStoredTimeFormat'), strtotime($request->checkout_time));
-        }
-
-        if(isset($request->from_to_date) && $request->from_to_date != ''){
-            $dates = explode(" to ", $request->from_to_date);
-            $data->checkin_date = isset($dates[0]) ? date(config('const.databaseStoredDateFormat'), strtotime(strtr($dates[0], '/', '-'))) : null;
-            $data->checkout_date = isset($dates[1]) ? date(config('const.databaseStoredDateFormat'), strtotime(strtr($dates[1], '/', '-'))) : null;
-        }
-
-        $data->save();
-
-        return $data;
     }
+    
+    $data->customer_id = isset($request->customer_id) ? $request->customer_id : null;
+    $data->room_number = isset($request->room_number) ? $request->room_number : null;
+    $data->date = isset($request->date) ? $request->date : null;        
+    $data->room_charge = isset($request->room_charge) ? $request->room_charge : null;
+    $data->person = isset($request->person) ? $request->person : null;
+    $data->total_days = isset($request->total_days) ? $request->total_days : null;
+
+    if(isset($request->checkin_time) && $request->checkin_time != ''){
+        $data->checkin_time = date(config('const.databaseStoredTimeFormat'), strtotime($request->checkin_time));
+    }
+
+    if(isset($request->checkout_time) && $request->checkout_time != ''){
+        $data->checkout_time = date(config('const.databaseStoredTimeFormat'), strtotime($request->checkout_time));
+    }
+
+    if(isset($request->from_to_date) && $request->from_to_date != ''){
+        $dates = explode(" to ", $request->from_to_date);
+        $data->checkin_date = isset($dates[0]) ? date(config('const.databaseStoredDateFormat'), strtotime(strtr($dates[0], '/', '-'))) : null;
+        $data->checkout_date = isset($dates[1]) ? date(config('const.databaseStoredDateFormat'), strtotime(strtr($dates[1], '/', '-'))) : null;
+    }
+
+    $data->save();
+
+    return $data;
+}
+
 
     /* Get Bill Details */
     public static function getBillDetails($id){
@@ -62,14 +108,31 @@ class Bills extends Model
     }
 
     /* Get New Bill Number */
+    // public static function getNewBillNumber(){
+    //     $data = Bills::latest()->first();
+    //     if(isset($data->id)){
+    //         return $data->id + 1;
+    //     }else{
+    //         return 1;
+    //     }       
+    // }
+
     public static function getNewBillNumber(){
-        $data = Bills::latest()->first();
-        if(isset($data->id)){
-            return $data->id + 1;
-        }else{
+        $currentYear = date('Y');
+        $financialYearStart = $currentYear . '-04-01';
+        $financialYearEnd = ($currentYear + 1) . '-03-31';
+        
+        $latestBill = Bills::whereBetween('date', [$financialYearStart, $financialYearEnd])
+                            ->orderBy('id', 'desc')
+                            ->first();
+    
+        if ($latestBill) {
+            return $latestBill->bill_no + 1;
+        } else {
             return 1;
-        }       
+        }
     }
+    
 
     /* Get Bills List */
     public static function postBillsList($request){

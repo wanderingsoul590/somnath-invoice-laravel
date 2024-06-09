@@ -104,7 +104,7 @@
                                 <p><b>Contact NO: </b><span>+91 {{ isset($data->customer->number) ? substr($data->customer->number, 0, 2).' '.substr($data->customer->number, 2, 4).' '.substr($data->customer->number, 6, 4) : '' }}</span></p>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6 text-right">
-                                <p> <strong>Invoice #{{ isset($data->id) ? $data->id : '' }}</strong></p>
+                                <p> <strong>Invoice #{{ isset($data->bill_no) ? $data->bill_no : '' }}</strong></p>
                                 <p> <strong>Date:</strong>{{ isset($data->date) ? date(config('const.displayDate'), strtotime($data->date)) : '' }}</p>
                             </div>
                         </div>

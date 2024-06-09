@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\InvoiceController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\BillsController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,16 @@ Route::middleware(['auth'])->group(function (){
 
     });
 });
+
+// Route::get('optimize-clear', function () {
+//     Artisan::call('optimize:clear');
+//     return "Optimize clear successfully.";
+// });
+
+// Route::get('migrate', function () {
+//     Artisan::call('migrate');
+//     return "Migrations have been run successfully.";
+// });
 
 
 

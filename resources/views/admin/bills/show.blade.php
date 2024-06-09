@@ -70,7 +70,7 @@
                                     <div class="mt-md-0 mt-2">
                                         <h4 class="invoice-title">
                                             Invoice
-                                            <span class="invoice-number">#{{ isset($data->id) ? $data->id : '' }}</span>
+                                            <span class="invoice-number">#{{ isset($data->bill_no) ? $data->bill_no : '' }}</span>
                                         </h4>
                                         <div class="invoice-date-wrapper">
                                             <p class="invoice-date-title">Date Issued:</p>

@@ -80,7 +80,7 @@
                                                         <i data-feather="hash"></i>
                                                     </div>
                                                 </div>
-                                                {!! Form::text('bill_number',$data->id, ['class' => 'form-control invoice-edit-input','id'=>"bill_number",'readonly' => 'true']) !!}
+                                                {!! Form::text('bill_number',$data->bill_no, ['class' => 'form-control invoice-edit-input','id'=>"bill_number",'readonly' => 'true']) !!}
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center mb-1">

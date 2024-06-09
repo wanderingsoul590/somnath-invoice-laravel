@@ -87,7 +87,8 @@ $(document).ready(function () {
                 }
             },
             columns: [
-                {data: 'id', name: 'id'},
+                // {data: 'id', name: 'id'},
+                {data: 'bill_no', name: 'bill_no'},
                 {data: 'customer', name: 'customer.name'},
                 {data: 'company', name: 'customer.company'},
                 {data: 'room_number', name: 'room_number'},
