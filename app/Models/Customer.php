@@ -49,9 +49,9 @@ class Customer extends Model
 
         $query = Customer::select('customer.*');     
         
-        if($request->order ==null){
-            $query->orderBy('Customer.id','desc');
-        }  
+        //if($request->order ==null){
+          //  $query->orderBy('Customer.id','desc');
+        //}  
 
         return Datatables::of($query)
             ->addColumn('action', function ($data) {

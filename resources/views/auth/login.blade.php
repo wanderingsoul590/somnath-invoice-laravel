@@ -41,7 +41,7 @@
                                     <h2 class="brand-text text-primary ml-1">Somnath</h2>
                                 </a>
 
-                                <h4 class="card-title mb-1">Welcome to Somnath Jewellers! 👋</h4>
+                                <h4 class="card-title mb-1">Welcome to Somnath Hotel! 👋</h4>
                                 <p class="card-text mb-2">Please sign-in to your account</p>
 
                                 <form class="login-form mt-2" id="login-form" action="{{ route('customlogin') }}" method="POST">
