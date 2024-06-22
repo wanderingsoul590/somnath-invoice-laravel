@@ -34,4 +34,18 @@ return array(
     "gstTypeCgstSgst" => 1, // Cgst & Sgst
     "gstTypeIgst" => 2, // Igst
 
+    'billStatusPaymentDueInt'=>0,
+    'billStatusPaymentCompletedInt'=>1,
+    'billStatusPaymentDue'=>'Due',
+    'billStatusPaymentCompleted'=>'Completed',
+
+    'paymentModeCashInt'=>1,
+    'paymentModeUPIInt'=>2,
+    'paymentModeCardInt'=>3,
+    'paymentModeDirectBankTransferInt'=>4,
+    'paymentModeCash'=>'Cash',
+    'paymentModeUPI'=>'UPI',
+    'paymentModeCard'=>'Card',
+    'paymentModeDirectBankTransfer'=>'Direct Bank Transfer',
+
 );

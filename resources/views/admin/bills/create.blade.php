@@ -125,6 +125,12 @@
                             <div class="card-body invoice-padding pt-0 pb-0">
                                 <div class="row row-bill-to invoice-spacing">
                                     <div class="col-xl-4 mb-lg-1 col-bill-to pl-0">
+                                        <h6>Register Number:</h6>
+                                        <div class="invoice-customer">
+                                        {!! Form::text('register_number','', ['class' =>'form-control','id'=>"register_number",'placeholder'=>"Enter Register Number"]) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 mb-lg-1 col-bill-to pl-0">
                                         <h6>Room Number:</h6>
                                         <div class="invoice-customer">
                                         {!! Form::text('room_number','', ['class' =>'form-control','id'=>"room_number",'placeholder'=>"Enter Room Number"]) !!}
@@ -152,6 +158,28 @@
                                         <h6>Check Out Time:</h6>
                                         <div class="invoice-customer">
                                         {!! Form::text('checkout_time',Input::old('checkout_time'), ['class' => 'form-control flatpickr-time text-left flatpickr-input active customdatepicker','id'=>"check-out-time",'placeholder'=>'HH:MM','readonly'=>'readonly']) !!}                                        
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 mb-lg-1 col-bill-to pl-0">
+                                        <h6>Payment Status:</h6>
+                                        <div class="invoice-customer" id="status_div">
+                                            <select class="form-control" name="status" id="status">
+                                                <option value="">Select Payment Status</option>
+                                                <option value="{{ config('const.billStatusPaymentDueInt') }}">{{ config('const.billStatusPaymentDue') }}</option>
+                                                <option value="{{ config('const.billStatusPaymentCompletedInt') }}">{{ config('const.billStatusPaymentCompleted') }}</option>
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 mb-lg-1 col-bill-to pl-0">
+                                        <h6>Payment Mode:</h6>
+                                        <div class="invoice-customer" id="payment_mode_div">
+                                            <select class="form-control" name="payment_mode" id="payment_mode">
+                                                <option value="">Select Payment Mode</option>
+                                                <option value="{{ config('const.paymentModeCashInt') }}">{{ config('const.paymentModeCash') }}</option>
+                                                <option value="{{ config('const.paymentModeUPIInt') }}">{{ config('const.paymentModeUPI') }}</option>
+                                                <option value="{{ config('const.paymentModeCardInt') }}">{{ config('const.paymentModeCard') }}</option>
+                                                <option value="{{ config('const.paymentModeDirectBankTransferInt') }}">{{ config('const.paymentModeDirectBankTransfer') }}</option>
+                                            </select>                                            
                                         </div>
                                     </div>
                                 </div>
@@ -271,6 +299,29 @@
 <script src="{{ asset('app-assets/js/scripts/forms/pickers/form-pickers.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+    $("#status").select2({
+        placeholder: "Select Payment Status",
+        allowClear: true
+    }).on("change", function (e) {
+        var result = $(this).valid();
+        if(result == true) {
+            $("#status").removeClass("input-validation-error");
+        }else{
+            $("#status").addClass("input-validation-error");
+        }
+    });
+
+    $("#payment_mode").select2({
+        placeholder: "Select Payment Mode",
+        allowClear: true
+    }).on("change", function (e) {
+        var result = $(this).valid();
+        if(result == true) {
+            $("#payment_mode").removeClass("input-validation-error");
+        }else{
+            $("#payment_mode").addClass("input-validation-error");
+        }
+    });
 
     $('#from_to_date').flatpickr({
         dateFormat: "d/m/Y",
@@ -511,6 +562,9 @@ $(document).ready(function () {
             customer_id: {
                 required: true,
             },
+            register_number:{
+                required: true,
+            },
             room_number: {
                 required: true,
             },
@@ -532,6 +586,12 @@ $(document).ready(function () {
             checkout_time: {
                 required: true,
             },
+            status: {
+                required: true,
+            },
+            payment_mode: {
+                required: true,
+            }
         },
         submitHandler: function (form) {
             if ($("#createform").validate().checkForm()) {
@@ -540,8 +600,14 @@ $(document).ready(function () {
             }
         },
         errorPlacement: function(error, element) {
-            if(element.attr("id") == "customer_id" ){
+            if(element.attr("id") == "customer_id"){
                 error.appendTo("#user_id_div");
+                $(element).addClass("input-validation-error");
+            }else if(element.attr("id") == "status" ){                                
+                error.appendTo("#status_div");
+                $(element).addClass("input-validation-error");
+            }else if(element.attr("id") == "payment_mode" ){                                
+                error.appendTo("#payment_mode_div");
                 $(element).addClass("input-validation-error");
             }else{
                 error.insertAfter(element);

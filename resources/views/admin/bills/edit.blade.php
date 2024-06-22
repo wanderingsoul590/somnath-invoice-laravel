@@ -118,7 +118,13 @@
 
                             <!-- Gold and Silver Rate Starts -->
                             <div class="card-body invoice-padding pt-0 pb-0">
-                                <div class="row row-bill-to invoice-spacing">
+                                <div class="row row-bill-to invoice-spacing">                                    
+                                    <div class="col-xl-4 mb-lg-1 col-bill-to pl-0">
+                                        <h6>Register Number:</h6>
+                                        <div class="invoice-customer">
+                                        {!! Form::text('register_number',$data->register_number, ['class' =>'form-control','id'=>"register_number",'placeholder'=>"Enter Register Number"]) !!}
+                                        </div>
+                                    </div>
                                     <div class="col-xl-4 mb-lg-1 col-bill-to pl-0">
                                         <h6>Room Number:</h6>
                                         <div class="invoice-customer">
@@ -147,6 +153,28 @@
                                         <h6>Check Out Time:</h6>
                                         <div class="invoice-customer">
                                         {!! Form::text('checkout_time',$data->checkout_time, ['class' => 'form-control flatpickr-time text-left flatpickr-input active customdatepicker','id'=>"check-out-time",'placeholder'=>'HH:MM','readonly'=>'readonly']) !!}                                        
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 mb-lg-1 col-bill-to pl-0">
+                                        <h6>Payment Status:</h6>
+                                        <div class="invoice-customer" id="status_div">
+                                            <select class="form-control" name="status" id="status">
+                                                <option value="">Select Payment Status</option>
+                                                <option value="{{ config('const.billStatusPaymentDueInt') }}" <?php echo isset($data) && ($data->status == config('const.billStatusPaymentDueInt')) ? 'selected' : ''?>>{{ config('const.billStatusPaymentDue') }}</option>
+                                                <option value="{{ config('const.billStatusPaymentCompletedInt') }}" <?php echo isset($data) && ($data->status == config('const.billStatusPaymentCompletedInt')) ? 'selected' : ''?>>{{ config('const.billStatusPaymentCompleted') }}</option>
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 mb-lg-1 col-bill-to pl-0">
+                                        <h6>Payment Mode:</h6>
+                                        <div class="invoice-customer" id="payment_mode_div">
+                                            <select class="form-control" name="payment_mode" id="payment_mode">
+                                                <option value="">Select Payment Mode</option>
+                                                <option value="{{ config('const.paymentModeCashInt') }}" <?php echo isset($data) && ($data->payment_mode == config('const.paymentModeCashInt')) ? 'selected' : ''?>>{{ config('const.paymentModeCash') }}</option>
+                                                <option value="{{ config('const.paymentModeUPIInt') }}" <?php echo isset($data) && ($data->payment_mode == config('const.paymentModeUPIInt')) ? 'selected' : ''?>>{{ config('const.paymentModeUPI') }}</option>
+                                                <option value="{{ config('const.paymentModeCardInt') }}" <?php echo isset($data) && ($data->payment_mode == config('const.paymentModeCardInt')) ? 'selected' : ''?>>{{ config('const.paymentModeCard') }}</option>
+                                                <option value="{{ config('const.paymentModeDirectBankTransferInt') }}" <?php echo isset($data) && ($data->payment_mode == config('const.paymentModeDirectBankTransferInt')) ? 'selected' : ''?>>{{ config('const.paymentModeDirectBankTransfer') }}</option>
+                                            </select>                                            
                                         </div>
                                     </div>
                                 </div>
@@ -265,6 +293,29 @@
 @section('script')
 <script type="text/javascript">
 $(document).ready(function () {
+    $("#status").select2({
+        placeholder: "Select Payment Status",
+        allowClear: true
+    }).on("change", function (e) {
+        var result = $(this).valid();
+        if(result == true) {
+            $("#status").removeClass("input-validation-error");
+        }else{
+            $("#status").addClass("input-validation-error");
+        }
+    });
+
+    $("#payment_mode").select2({
+        placeholder: "Select Payment Mode",
+        allowClear: true
+    }).on("change", function (e) {
+        var result = $(this).valid();
+        if(result == true) {
+            $("#payment_mode").removeClass("input-validation-error");
+        }else{
+            $("#payment_mode").addClass("input-validation-error");
+        }
+    });
 
     <?php if(isset($data->gst_type) && $data->gst_type == config('const.gstTypeCgstSgst')){ ?>
         $("#view-igst-div").hide();
@@ -508,6 +559,9 @@ $(document).ready(function () {
             customer_id: {
                 required: true,
             },
+            register_number:{
+                required: true,
+            },
             room_number: {
                 required: true,
             },
@@ -518,6 +572,12 @@ $(document).ready(function () {
                 required: true,
             },
             room_charge: {
+                required: true,
+            },
+            status: {
+                required: true,
+            },
+            payment_mode: {
                 required: true,
             }
         },
@@ -530,6 +590,12 @@ $(document).ready(function () {
         errorPlacement: function(error, element) {
             if(element.attr("id") == "customer_id" ){
                 error.appendTo("#user_id_div");
+                $(element).addClass("input-validation-error");
+            }else if(element.attr("id") == "status" ){                                
+                error.appendTo("#status_div");
+                $(element).addClass("input-validation-error");
+            }else if(element.attr("id") == "payment_mode" ){                                
+                error.appendTo("#payment_mode_div");
                 $(element).addClass("input-validation-error");
             }else{
                 error.insertAfter(element);

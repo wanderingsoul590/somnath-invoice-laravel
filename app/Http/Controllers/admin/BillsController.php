@@ -15,7 +15,9 @@ class BillsController extends Controller
 {
     /* Bills List Page */
     public function index(Request $request){
-        return view('admin.bills.index');
+        $customers = Customer::getAllCustomers();
+        $data = Bills::getBillStatistics($request);        
+        return view('admin.bills.index',compact('customers','data'));
     }
 
     /* Create Bill Page */
@@ -42,6 +44,8 @@ class BillsController extends Controller
                 'person' => 'required',
                 'total_days' => 'required',
                 'room_charge' => 'required',
+                'status' => 'required',
+                'payment_mode' => 'required'
             );
 
             $validator = Validator::make($request->all(), $rules);
@@ -173,6 +177,8 @@ class BillsController extends Controller
                 'person' => 'required',
                 'total_days' => 'required',
                 'room_charge' => 'required',
+                'status' => 'required',
+                'payment_mode' => 'required'
             );
 
             $validator = Validator::make($request->all(), $rules);
@@ -251,6 +257,17 @@ class BillsController extends Controller
             $data->netamount = $netamount;
         }
         return view('admin.bills.printbill',compact('data'));
+    }
+
+    /* Get Bill Statistics */
+    public static function getBillStatistics(Request $request)
+    {
+        try{          
+            $data = Bills::getBillStatistics($request);
+            return Helper::success($data);
+        }catch(\Exception $e){
+            return Helper::fail([],$e->getMessage());            
+        } 
     }
     
 }

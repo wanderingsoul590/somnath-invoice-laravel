@@ -148,4 +148,15 @@ class Helper {
         );
     }
 
+    # Bill Status
+    public static function billStatus($status) {
+        if ($status == config('const.billStatusPaymentDueInt')) {
+            return '<span class="badge badge-pill badge-light-warning mr-1">' . config('const.billStatusPaymentDue') . '</span>';
+        } else if ($status == config('const.billStatusPaymentCompletedInt')) {
+            return '<span class="badge badge-pill badge-light-success mr-1">' . config('const.billStatusPaymentCompleted') . '</span>';
+        } else {
+            return '<button type="button" class="btn red btn-xs pointerhide cursornone">---</button>';
+        }
+    }
+
 }

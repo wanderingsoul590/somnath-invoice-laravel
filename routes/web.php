@@ -66,6 +66,7 @@ Route::middleware(['auth'])->group(function (){
        Route::resource('bills', BillsController::class);
        Route::post('getbills',[BillsController::class, 'postBillsList'])->name('getbills');
        Route::get('printbill/{id}',[BillsController::class, 'printbill'])->name('printbill');
+       Route::post('get-bill-statistics',[BillsController::class, 'getBillStatistics'])->name('getbillstatistics');
 
     //    Route::post('sendinvoice',[InvoiceController::class, 'sendInvoice'])->name('sendinvoice');
     //    Route::get('donwload-invoice/{pdf}', [InvoiceController::class, 'downloadInvoice'])->name('downloadinvoice');
